@@ -17,8 +17,9 @@ const findMaxConsecutiveOnes = (nums) => {
     return max;
 }
 
-// const nums = ref([1,0,1,1,0,1]);
-// const result = ref(findMaxConsecutiveOnes(nums.value));
+const nums = ref([1,0,1,1,0,1]);
+const result = ref(findMaxConsecutiveOnes(nums.value));
+console.log(result.value);
 </script>
 
 <template>
