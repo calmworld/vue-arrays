@@ -1,6 +1,8 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import MaxConsecutiveOnes from './components/MaxConsecutiveOnes.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+// import MaxConsecutiveOnes from './components/MaxConsecutiveOnes.vue'
+import MergeTwoLists from './components/MergeTwoLists.vue'
+
 </script>
 
 <template>
@@ -13,7 +15,8 @@ import MaxConsecutiveOnes from './components/MaxConsecutiveOnes.vue'
     </a>
   </div>
   <!-- <HelloWorld msg="Vite + Vue" /> -->
-  <MaxConsecutiveOnes />
+  <!-- <MaxConsecutiveOnes /> -->
+  <MergeTwoLists />
 </template>
 
 <style scoped>
