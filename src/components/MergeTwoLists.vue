@@ -46,31 +46,83 @@ var mergeTwoLists = function(list1, list2) {
 <script setup>
 import { ref } from 'vue'
 
-const mergeTwoLists = (list1, list2) => {
-    let masterList = [];
+// Solution 1:
 
-    while (list1.length && list2.length) {
-        if (list1[0] < list2[0]) {
-            masterList.push(list1.shift());
-        } else {
-            masterList.push(list2.shift());
-        }
-    }
+// const mergeTwoLists = (list1, list2) => {
+//     let masterList = [];
 
-    if (list1.length) {
-        masterList = masterList.concat(list1);
-    } else {
-        masterList = masterList.concat(list2);
-    }
+//     while (list1.length && list2.length) {
+//         if (list1[0] < list2[0]) {
+//             masterList.push(list1.shift());
+//         } else {
+//             masterList.push(list2.shift());
+//         }
+//     }
 
-    return masterList;
-    
+//     if (list1.length) {
+//         masterList = masterList.concat(list1);
+//     } else {
+//         masterList = masterList.concat(list2);
+//     }
+//     return masterList;  
+// }
+
+
+// Solution 2:
+
+// Time complexity: O(m+n) === m is length of list1 and n is length of list2
+
+// Space complexity: O(1)
+
+const ListNode = function(val, next) {
+    this.val = (val === undefined ? 0 : val);
+    this.next = (next === undefined ? null : next);
 }
 
-const list1 = ref([1,2,4]);
-const list2 = ref([1,3,4]);
-const result = mergeTwoLists(list1.value, list2.value);
-console.log(result);
+const mergeTwoLists = (list1, list2) => {
+    let masterlist = new ListNode();
+    let current = masterlist;
+
+    while (list1 && list2) {
+        if (list1.val > list2.val) {
+            current.next = list2;
+            list2 = list2.next;
+        } else {
+            current.next = list1;
+            list1 = list1.next;
+        }
+        current = current.next;
+    }
+
+    current.next = list1 || list2;
+    return masterlist.next;
+}
+
+const arrayToList = (arr) => {
+    let dummy = new ListNode();
+    let current = dummy;
+    for (let val of arr) {
+        current.next = new ListNode(val);
+        current = current.next;
+    }
+    return dummy.next;
+}
+
+const list1 = ref(arrayToList([1,2,4]));
+const list2 = ref(arrayToList([1,3,4]));
+const result = ref(mergeTwoLists(list1.value, list2.value));
+
+// Convert the result linked list back to an array for easy comparison
+const listToArray = (list) => {
+    let arr = [];
+    while (list) {
+        arr.push(list.val);
+        list = list.next;
+    }
+    return arr;
+}
+// expected result: [1,1,2,3,4,4]
+console.log(listToArray(result.value)); // [1,1,2,3,4,4]
 
 </script>
 
@@ -82,9 +134,14 @@ console.log(result);
             Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.
             Return the head of the merged linked list.
         </p>
-        <p>Example Input: list1 = [1,2,4], list2 = [1,3,4]:</p>
-        <p>Result: {{ mergeTwoLists([1,2,4], [1,3,4]) }}</p>
-        <p>Example Input: list1 = [], list2 = []:</p>
-        <p>Result: {{ mergeTwoLists([], []) }}</p>
+        <h3>Example Input: list1 = [1,2,4], list2 = [1,3,4]:</h3>
+        <p>Output should be: [1,1,2,3,4,4]</p>
+        <p>Result: {{ listToArray(result) }}</p>
+        <h3>Example Input: list1 = [], list2 = []:</h3>
+        <p>Output should be: []</p>
+        <p>Result: {{ listToArray(mergeTwoLists([], [])) }}</p>
+        <h3>Example Input: list1 = [], list2 = [0]:</h3>
+        <p>Output should be: [0]</p>
+        <p>Result: {{ listToArray(mergeTwoLists([], [0])) }}</p>
     </div>
 </template>
